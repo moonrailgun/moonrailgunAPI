@@ -1,0 +1,74 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="col-xs-8 col-xs-offset-2">
+<form class="form-horizontal" action="upload.php" method="post" enctype="multipart/form-data">
+	<div class="form-group text-center">
+		<h3>应用信息</h3>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">应用名称</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" name="app-name"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">应用类型</label>
+		<div class="col-sm-2">
+			<select class="form-control" name="app-type">
+				<option>app</option>
+				<option>fetch</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">应用版本</label>
+		<div class="col-sm-10">
+			<input type="number" class="form-control" style="width: 60px;display: inline;" name="app-version-first" value="1" />
+			<span>.</span>
+			<input type="number" class="form-control" style="width: 60px;display: inline;" name="app-version-second" value="0"/>
+			<span>.</span>
+			<input type="number" class="form-control" style="width: 60px;display: inline;" name="app-version-third" value="0"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">应用作者</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" name="app-author"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">应用说明</label>
+		<div class="col-sm-10">
+			<textarea name="app-description" class="form-control" rows="5"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">应用快照</label>
+		<div class="col-sm-10">
+			<textarea name="app-snapshoot-json" class="form-control" rows="3"></textarea>
+			<span id="helpBlock" class="help-block">写入一个json数组,数组内容为快照网络地址.</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">应用压缩包</label>
+		<div class="col-sm-10">
+			<input type="file" class="form-control" name="file" id="file" />
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-4">
+			<input type="submit" name="submit" class="btn btn-info btn-block" style="height: 60px" value="上传" />
+		</div>
+		<div class="col-sm-4">
+			<input type="reset" name="reset" class="btn btn-default btn-block" style="height: 60px" value="重置" />
+		</div>
+	</div>
+</form>
+</div>
+</body>
+</html>
