@@ -1,4 +1,5 @@
 <?php
+echo "uploading ...";
 header("content-type:text/html;charset=utf-8");
 date_default_timezone_set("Asia/Shanghai");
 
@@ -6,15 +7,16 @@ $app_name        = $_POST["app-name"];
 $app_type        = $_POST["app-type"];
 $app_version     = $_POST["app-version-first"] . "." . $_POST["app-version-second"] . "." . $_POST["app-version-third"];
 $app_author      = $_POST["app-author"];
+$app_icon        = $_POST["app-icon"];
 $app_description = $_POST["app-description"];
-$app_snapshoot   = $_POST["app-snapshoot-json"];
+$app_screenshots = json_encode($_POST["app-screenshots-json"]);
 
 echo "应用名称:" . $app_name . "<br />";
 echo "应用类型:" . $app_type . "<br />";
 echo "应用版本:" . $app_version . "<br />";
 echo "应用作者:" . $app_author . "<br />";
 echo "应用说明:" . $app_description . "<br />";
-echo "应用快照:" . $app_snapshoot . "<br />";
+echo "应用快照:" . json_decode($app_screenshots, true) . "<br />";
 echo "<br />";
 
 //上传文件
@@ -50,8 +52,9 @@ if (($_FILES["file"]["type"] == "application/x-zip-compressed")
             $new_app["type"]        = $app_type;
             $new_app["version"]     = $app_version;
             $new_app["author"]      = $app_author;
+            $new_app["icon"]        = $app_icon;
             $new_app["description"] = $app_description;
-            $new_app["snapshoot"]   = $app_snapshoot;
+            $new_app["screenshots"] = $app_screenshots;
             $new_app["size"]        = $_FILES["file"]["size"];
             $new_app["createdTime"] = date("Y-m-d h:i:s");
             $new_app["updatedTime"] = date("Y-m-d h:i:s");

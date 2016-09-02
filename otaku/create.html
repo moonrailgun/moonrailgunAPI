@@ -21,6 +21,7 @@
 		<div class="col-sm-2">
 			<select class="form-control" name="app-type">
 				<option>app</option>
+				<option>web</option>
 				<option>fetch</option>
 			</select>
 		</div>
@@ -42,6 +43,12 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label class="col-sm-2 control-label">应用图标</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="app-icon" required/>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-2 control-label">应用说明</label>
 		<div class="col-sm-10">
 			<textarea name="app-description" class="form-control" rows="5" required></textarea>
@@ -50,7 +57,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">应用快照</label>
 		<div class="col-sm-10">
-			<textarea name="app-snapshoot-json" class="form-control" rows="3"></textarea>
+			<textarea name="app-screenshots-json" class="form-control" rows="3"></textarea>
 			<span id="helpBlock" class="help-block">写入一个json数组,数组内容为快照网络地址.</span>
 		</div>
 	</div>
