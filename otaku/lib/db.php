@@ -1,20 +1,25 @@
 <?php
-class DB{
-	var $dbPath = "../app-list.json";
+class DB
+{
+    $mysql_servername = "localhost";
+    $mysql_username   = "root";
+    $mysql_password   = "";
+    $mysql_database   = "otaku";
 
-	function addFile($fileData){
-		$data = file_get_contents($dbPath);
-		$json = json_decode($data);
-		array_push($json,$fileData);
-		this->save($json);
-	}
+    public function query(cmd)
+    {
+        $con = mysql_connect($mysql_servername, $mysql_username, $mysql_password);
+        if (!$con) {
+            die('Could not connect: ' . mysql_error());
+        }
 
-	function save($data){
-		$myfile = fopen($dbPath, "w") or die("Unable to open file!");
-		$txt = json_encode($data);
-		fwrite($myfile, $txt);
-		fclose($myfile);
-	}
+        mysql_select_db($mysql_database, $con);
+
+        $result = mysql_query(cmd);
+        mysql_close($con);
+
+        return $result;
+    }
 }
 
 $db = new DB();
