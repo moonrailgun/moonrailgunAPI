@@ -1,5 +1,5 @@
 <template>
-  <div id="ocr">
+  <div id="ocr" @keyup.enter="onPaste">
     <el-row>
       <el-col :span="12">
         <el-form label-width="120px">
@@ -12,6 +12,7 @@
               action="/ai/api/ocr/general/image"
               :data="extData"
               list-type="picture"
+              accept=".jpg,.png"
               :auto-upload="false"
               :limit="1"
               :on-success="onSuccess"
@@ -62,8 +63,29 @@
 <script>
 import config from '../../config'
 
+const isPasteImage = function (items) {
+  let i = 0
+  let item
+  while (i < items.length) {
+    item = items[i]
+    if (item.type.indexOf('image') !== -1) {
+      return item
+    }
+    i++
+  }
+  return false
+}
+
 export default {
   name: 'AIOcr',
+  mounted () {
+    console.log('挂载粘贴事件监听')
+    window.addEventListener('paste', this.onPaste)
+  },
+  destroyed () {
+    console.log('销毁粘贴事件监听')
+    window.removeEventListener('paste', this.onPaste)
+  },
   data () {
     return {
       languageType: 'CHN_ENG', // 识别语言类型
@@ -87,6 +109,35 @@ export default {
     }
   },
   methods: {
+    onPaste (e) {
+      if (e.clipboardData && e.clipboardData.items) {
+        let image = isPasteImage(e.clipboardData.items)
+        if (image) {
+          // 上传图片
+          e.preventDefault()
+          let rawFile = image.getAsFile()
+          const uploadEl = this.$refs.upload
+          rawFile.uid = Date.now() + uploadEl.tempIndex++
+          let file = {
+            status: 'ready',
+            name: rawFile.name,
+            size: rawFile.size,
+            percentage: 0,
+            uid: rawFile.uid,
+            raw: rawFile
+          }
+          try {
+            file.url = URL.createObjectURL(rawFile)
+          } catch (err) {
+            console.error(err)
+            return
+          }
+          uploadEl.clearFiles()
+          uploadEl.uploadFiles.push(file)
+          uploadEl.onChange(file, uploadEl.uploadFiles)
+        }
+      }
+    },
     onSubmitOCR () {
       if (!this.isUploading) {
         console.log('上传图片')
@@ -97,6 +148,7 @@ export default {
     onSuccess (response, file, fileList) {
       this.isUploading = false
       if (response.result) {
+        this.$refs.upload.clearFiles() // 清理文件列表
         this.ocrResult = response.data.words_result
         this.ocrResultFileUrl = file.url
       }
@@ -125,7 +177,7 @@ export default {
 <style lang="scss">
 #ocr {
   padding: 20px 10px 0;
-  // text-align: center;
+  text-align: left;
 
   .upload {
     margin-bottom: 10px;
