@@ -9,7 +9,7 @@
               class="upload"
               name="image"
               drag
-              action="/ai/api/ocr/general/image"
+              action="/api/ai/api/ocr/general/image"
               :data="extData"
               list-type="picture"
               accept=".jpg,.png"
