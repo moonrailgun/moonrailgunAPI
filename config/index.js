@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/ai': {
+      '/api': {
         target: 'http://api.moonrailgun.com',
         changeOrigin: true
       }

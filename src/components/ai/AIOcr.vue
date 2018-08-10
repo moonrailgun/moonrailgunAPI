@@ -1,7 +1,7 @@
 <template>
   <div id="ocr" @keyup.enter="onPaste">
     <el-row>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12">
         <el-form label-width="120px">
           <el-form-item label="上传图片:">
             <el-upload
@@ -16,10 +16,11 @@
               :auto-upload="false"
               :limit="1"
               :on-success="onSuccess"
-              :on-error="onError">
+              :on-error="onError"
+              :before-upload="beforeUpload">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em>，或按下ctrl+v粘贴剪切板的图片</div>
-              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过1MB</div>
             </el-upload>
           </el-form-item>
           <el-form-item label="识别语言:">
@@ -46,7 +47,7 @@
           </el-form-item>
         </el-form>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12">
         <div class="ocr-result">
           <p
             v-for="(res, index) in ocrResult"
@@ -142,6 +143,19 @@ export default {
         this.isUploading = true
       }
     },
+    beforeUpload (file) {
+      if (file.size > 1 * 1024 * 1024) {
+        // 大于1m
+        this.$message.error('上传图片大小不能超过 1MB!')
+        return false
+      }
+      if (['image/png', 'image/jpeg'].indexOf(file.type) === -1) {
+        // 大于1m
+        this.$message.error('上传图片格式不正确!')
+        return false
+      }
+      return true
+    },
     onSuccess (response, file, fileList) {
       this.isUploading = false
       if (response.result) {
@@ -153,6 +167,7 @@ export default {
     onError (err, file, fileList) {
       this.isUploading = false
       console.log(err)
+      this.$alert(JSON.stringify(err), '解析错误')
     },
     getProbability (probability) {
       if (probability > 0.95) {
