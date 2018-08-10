@@ -61,8 +61,6 @@
 </template>
 
 <script>
-import config from '../../config'
-
 const isPasteImage = function (items) {
   let i = 0
   let item
@@ -92,7 +90,6 @@ export default {
       detectDirection: false,
       detectLanguage: true,
       probability: true,
-      apiurl: config.apiurl,
       ocrResult: [],
       ocrResultFileUrl: '',
       isUploading: false
