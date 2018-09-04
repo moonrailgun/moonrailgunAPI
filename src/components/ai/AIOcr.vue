@@ -53,7 +53,13 @@
             v-for="(res, index) in ocrResult"
             :key="res.words + index"
             :class="getProbability(res.probability.average)"
-          >{{res.words}}</p>
+          >
+            <el-tooltip effect="dark" placement="top-start">
+              <div slot="content" v-html="getProbabilityTip(res.probability)"></div>
+              <div class="probability-tip"></div>
+            </el-tooltip>
+            {{res.words}}
+          </p>
           <img :src="ocrResultFileUrl" />
         </div>
       </el-col>
@@ -181,6 +187,9 @@ export default {
       } else {
         return 'bottom'
       }
+    },
+    getProbabilityTip (allProbabilityData) {
+      return `平均值:${allProbabilityData.average}<br />最小值:${allProbabilityData.min}<br />方差:${allProbabilityData.variance}`
     }
   }
 }
@@ -203,6 +212,7 @@ export default {
 
   .ocr-result {
     p {
+      position: relative;
       margin: 0;
       margin-bottom: 10px;
       border-left: 3px solid transparent;
@@ -227,6 +237,15 @@ export default {
       }
       &.bottom {
         border-left-color: orangered;
+      }
+
+      .probability-tip {
+        position: absolute;
+        left: -3px;
+        height: 100%;
+        width: 10px;
+        background-color: transparent;
+        outline: 0;
       }
     }
 
