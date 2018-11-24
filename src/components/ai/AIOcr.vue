@@ -62,12 +62,18 @@
           </p>
           <img :src="ocrResultFileUrl" />
         </div>
+        <div class="translate-result" v-if="ocrResult && ocrResult.length > 0">
+          <el-button size="small" type="primary" @click="onTranslate">翻译</el-button>
+          <div>{{translateResult}}</div>
+        </div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+const translate = require('google-translate-api-without-node')
+
 const isPasteImage = function (items) {
   let i = 0
   let item
@@ -99,7 +105,8 @@ export default {
       probability: true,
       ocrResult: [],
       ocrResultFileUrl: '',
-      isUploading: false
+      isUploading: false,
+      translateResult: ''
     }
   },
   computed: {
@@ -190,6 +197,16 @@ export default {
     },
     getProbabilityTip (allProbabilityData) {
       return `平均值:${allProbabilityData.average}<br />最小值:${allProbabilityData.min}<br />方差:${allProbabilityData.variance}`
+    },
+    onTranslate () {
+      let words = this.ocrResult.map(x => x.words)
+      words = words.join('\n')
+      translate(words, {to: 'zh-cn'}).then(res => {
+        console.log('translate result', words, res)
+        this.translateResult = res.text
+      }).catch(err => {
+        this.translateResult = err
+      })
     }
   }
 }

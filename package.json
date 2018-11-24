@@ -16,6 +16,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.5",
+    "google-translate-api-without-node": "^2.3.0",
+    "google-translate-token-without-node": "^1.0.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
