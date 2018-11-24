@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://api.moonrailgun.com',
+        target: 'https://api.moonrailgun.com',
         changeOrigin: true
       }
     },
