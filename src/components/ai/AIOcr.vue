@@ -201,7 +201,7 @@ export default {
     },
     onTranslate () {
       let words = this.ocrResult.map(x => x.words)
-      words = words.join('\n')
+      words = words.join(' ')
       axios.post('/api/translate/baidu/translate', {
         text: words
       }).then(res => {
