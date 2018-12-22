@@ -73,6 +73,7 @@
 
 <script>
 const translate = require('google-translate-api-without-node')
+import axios from 'axios'
 
 const isPasteImage = function (items) {
   let i = 0
@@ -201,9 +202,11 @@ export default {
     onTranslate () {
       let words = this.ocrResult.map(x => x.words)
       words = words.join('\n')
-      translate(words, {to: 'zh-cn'}).then(res => {
-        console.log('translate result', words, res)
-        this.translateResult = res.text
+      axios.post('/api/translate/baidu/translate', {
+        text: word,
+        to: 'zh'
+      }).then(res => {
+        this.translateResult = res.data.text
       }).catch(err => {
         this.translateResult = err
       })
