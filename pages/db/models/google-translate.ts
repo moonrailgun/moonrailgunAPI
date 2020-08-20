@@ -6,7 +6,7 @@ const googleTranslateSchema = new Schema({
 });
 
 const GoogleTranslate =
-  mongoose.model('google_translate') ??
+  mongoose.models['google_translate'] ||
   mongoose.model('google_translate', googleTranslateSchema);
 
 export async function getGoogleTranslateToken(): Promise<string | null> {
