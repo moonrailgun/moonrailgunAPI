@@ -3,7 +3,7 @@ import { NextApiHandler } from 'next';
 import {
   getGoogleTranslateToken,
   setGoogleTranslateToken,
-} from '../../db/models/google-translate';
+} from '../../../utils/db/models/google-translate';
 
 const handler: NextApiHandler = async (req, res) => {
   try {
