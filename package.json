@@ -9,13 +9,17 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "config": "^3.3.1",
     "google-translate-api": "^2.3.0",
+    "mongoose": "^5.7.14",
     "next": "latest",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@types/config": "0.0.36",
     "@types/google-translate-api": "^2.3.1",
+    "@types/mongoose": "^5.7.36",
     "@types/node": "^12.12.21",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",

@@ -1,5 +1,9 @@
 import { NextApiHandler } from 'next';
-import translate from 'google-translate-api';
+// import translate from 'google-translate-api';
+import {
+  getGoogleTranslateToken,
+  setGoogleTranslateToken,
+} from '../../db/models/google-translate';
 
 const handler: NextApiHandler = async (req, res) => {
   try {
@@ -15,8 +19,13 @@ const handler: NextApiHandler = async (req, res) => {
       return;
     }
 
-    const result = await translate(text, { from, to });
-    res.status(200).json({ result });
+    const token = await getGoogleTranslateToken();
+    if (token === null) {
+      await setGoogleTranslateToken(new Date().valueOf());
+    }
+
+    // const result = await translate(text, { from, to });
+    res.status(200).json({ result: token });
   } catch (err) {
     res.status(500).json(err.message);
   }
