@@ -21,7 +21,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     const token = await getGoogleTranslateToken();
     if (token === null) {
-      await setGoogleTranslateToken(new Date().valueOf());
+      await setGoogleTranslateToken(String(new Date().valueOf()));
     }
 
     // const result = await translate(text, { from, to });
