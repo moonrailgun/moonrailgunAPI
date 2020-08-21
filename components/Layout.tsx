@@ -1,41 +1,63 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import { AppstoreOutlined } from '@ant-design/icons';
 
-type Props = {
-  children?: ReactNode;
-  title?: string;
+const renderLink = (link: string, title: string) => {
+  return (
+    <Menu.Item key={link}>
+      <Link href={link}>
+        <a>{title}</a>
+      </Link>
+    </Menu.Item>
+  );
 };
 
-const Layout = ({ children, title = 'This is the default title' }: Props) => (
-  <div>
-    <Head>
-      <title>{title}</title>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-    <header>
-      <nav>
-        <Link href="/">
-          <a>Home</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/about">
-          <a>About</a>
-        </Link>{' '}
-        |{' '}
-        <Link href="/users">
-          <a>Users List</a>
-        </Link>{' '}
-        | <a href="/api/users">Users API</a>
-      </nav>
-    </header>
-    {children}
-    <footer>
-      <hr />
-      <span>I'm here to stay (Footer)</span>
-    </footer>
-  </div>
-);
+const BaseLayout: React.FC<{
+  title: string;
+  link?: string;
+}> = React.memo((props) => {
+  const { title, link = '/', children } = props;
 
-export default Layout;
+  return (
+    <div style={{ height: '100vh' }}>
+      <Head>
+        <title>{title}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+
+      <Layout>
+        <Layout.Sider width={200}>
+          <Menu
+            mode="inline"
+            selectedKeys={[link]}
+            defaultOpenKeys={['sub1']}
+            style={{ height: '100vh' }}
+          >
+            {renderLink('/', '主页')}
+            <Menu.SubMenu key="sub1" icon={<AppstoreOutlined />} title="工具箱">
+              {renderLink('/tools/ocr', '百度识图')}
+            </Menu.SubMenu>
+          </Menu>
+        </Layout.Sider>
+        <Layout.Content
+          style={{
+            padding: '12px 24px 0',
+            minHeight: 280,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <div style={{ flex: 1 }}>{children}</div>
+          <Layout.Footer style={{ textAlign: 'center' }}>
+            Power by <a href="http://moonrailgun.com">moonrailgun</a> with ❤
+          </Layout.Footer>
+        </Layout.Content>
+      </Layout>
+    </div>
+  );
+});
+
+export default BaseLayout;

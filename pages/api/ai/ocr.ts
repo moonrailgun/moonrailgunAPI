@@ -26,7 +26,7 @@ const handler: NextApiHandler = async (req, res) => {
     // 新建一个对象，建议只保存一个对象调用服务接口
     const client = new AipOcrClient(APP_ID, API_KEY, SECRET_KEY);
     const imageBase64: string = req.body.imageBase64;
-    const language: LanguageType = req.body.imageBase64 ?? 'CHN_ENG';
+    const language: LanguageType = req.body.language ?? 'CHN_ENG';
 
     if (!imageBase64) {
       res.status(500).send('require imageBase64!');

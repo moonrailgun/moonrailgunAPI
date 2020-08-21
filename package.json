@@ -9,12 +9,15 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "antd": "^4.5.4",
     "baidu-aip-sdk": "^2.4.6",
     "google-translate-api": "^2.3.0",
     "mongoose": "^5.7.14",
     "next": "latest",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@types/config": "0.0.36",
@@ -23,6 +26,7 @@
     "@types/node": "^12.12.21",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
+    "@types/styled-components": "^5.1.2",
     "prettier": "^2.0.5",
     "typescript": "3.7.3"
   },
