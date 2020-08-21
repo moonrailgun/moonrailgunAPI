@@ -9,6 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "baidu-aip-sdk": "^2.4.6",
     "google-translate-api": "^2.3.0",
     "mongoose": "^5.7.14",
     "next": "latest",
