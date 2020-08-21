@@ -27,6 +27,7 @@ const handler: NextApiHandler = async (req, res) => {
     // const result = await translate(text, { from, to });
     res.status(200).json({ result: token });
   } catch (err) {
+    console.error(err);
     res.status(500).json(err.message);
   }
 };
