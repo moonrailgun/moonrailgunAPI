@@ -13,7 +13,7 @@ export async function getFileBase64(file: File | Blob, withMIME = false) {
         // 移除mime
         base64 = base64.split(',')[1];
       }
-      resolve();
+      resolve(base64);
     };
 
     reader.onerror = (e) => {

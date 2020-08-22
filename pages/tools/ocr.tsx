@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { getFileBase64, isPasteImage } from '../../utils/image-helper';
 import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
 import { usePaste } from '../../utils/hooks/usePaste';
+import axios from 'axios';
 
 const { Dragger } = Upload;
 
@@ -34,6 +35,7 @@ const UploadInner = styled.div`
 const OcrPage: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [language, setLanguage] = useState('CHN_ENG');
+  const [resultList, setResultList] = useState<string[]>([]);
 
   usePaste((e) => {
     if (e.clipboardData && e.clipboardData.items) {
@@ -75,6 +77,23 @@ const OcrPage: React.FC = () => {
     },
     []
   );
+
+  const handleSubmit = useCallback(async () => {
+    if (fileList.length !== 1) {
+      return;
+    }
+
+    const base64 = await getFileBase64(fileList[0].originFileObj!);
+
+    const { data } = await axios.post('/api/ai/ocr', {
+      language,
+      imageBase64: base64,
+    });
+
+    const result = data.result.words_result.map((w: any) => w.words);
+
+    setResultList(result);
+  }, [fileList, language]);
 
   return (
     <BaseLayout title="百度识图" link="/tools/ocr">
@@ -126,13 +145,22 @@ const OcrPage: React.FC = () => {
               </Row>
 
               <Row>
-                <Button type="primary">文本识别</Button>
+                <Button type="primary" onClick={handleSubmit}>
+                  文本识别
+                </Button>
               </Row>
             </div>
           )}
         </Col>
 
-        <Col>识图结果:</Col>
+        <Col>
+          <div>识图结果:</div>
+          <div>
+            {resultList.map((item, i) => (
+              <div key={i}>{String(item)}</div>
+            ))}
+          </div>
+        </Col>
       </Row>
     </BaseLayout>
   );
