@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import BaseLayout from '../../components/Layout';
-import { Upload, message, Row, Col } from 'antd';
+import { Upload, message, Row, Col, Select, Button } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { getFileBase64 } from '../../utils/image-helper';
-import { UploadFile } from 'antd/lib/upload/interface';
+import { getFileBase64, isPasteImage } from '../../utils/image-helper';
+import { UploadFile, UploadChangeParam } from 'antd/lib/upload/interface';
+import { usePaste } from '../../utils/hooks/usePaste';
 
 const { Dragger } = Upload;
 
@@ -32,6 +33,48 @@ const UploadInner = styled.div`
 
 const OcrPage: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [language, setLanguage] = useState('CHN_ENG');
+
+  usePaste((e) => {
+    if (e.clipboardData && e.clipboardData.items) {
+      const image = isPasteImage(e.clipboardData.items);
+      if (image) {
+        // 上传图片
+        e.preventDefault();
+        const rawFile = image.getAsFile()!;
+        // const uploadEl = this.$refs.upload;
+        const uploadFile: UploadFile = {
+          uid: Date.now().toString(),
+          size: rawFile.size,
+          name: rawFile.name,
+          type: rawFile.type,
+          originFileObj: rawFile,
+          status: 'done',
+        };
+
+        setFileList([uploadFile]);
+      }
+    }
+  });
+
+  const handleChange = useCallback(
+    async (info: UploadChangeParam<UploadFile<any>>) => {
+      if (info.fileList[0]) {
+        setFileList([info.fileList[0]]); // 只显示一个
+      } else {
+        setFileList([]);
+      }
+
+      const { status } = info.file;
+
+      if (status === 'done') {
+        message.success(`${info.file.name} 文件上传成功.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} 文件上传失败.`);
+      }
+    },
+    []
+  );
 
   return (
     <BaseLayout title="百度识图" link="/tools/ocr">
@@ -48,28 +91,7 @@ const OcrPage: React.FC = () => {
               }
               return file.type === 'image/png';
             }}
-            onChange={async (info) => {
-              if (info.fileList[0]) {
-                setFileList([info.fileList[0]]); // 只显示一个
-              } else {
-                setFileList([]);
-              }
-
-              const { status } = info.file;
-              if (status !== 'uploading') {
-                console.log(info.file, info.fileList);
-
-                console.log(await getFileBase64(info.file.originFileObj!));
-              }
-
-              if (status === 'done') {
-                message.success(
-                  `${info.file.name} file uploaded successfully.`
-                );
-              } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-              }
-            }}
+            onChange={handleChange}
           >
             <UploadInner>
               <p className="upload-drag-icon">
@@ -79,6 +101,35 @@ const OcrPage: React.FC = () => {
               <p className="upload-hint">只支持上传图片格式</p>
             </UploadInner>
           </Dragger>
+
+          {fileList.length > 0 && (
+            <div style={{ marginTop: 24 }}>
+              <Row>
+                <Col sm={6}>
+                  <p>识别语言:</p>
+                </Col>
+
+                <Col>
+                  <Select value={language} onChange={(val) => setLanguage(val)}>
+                    <Select.Option value="CHN_ENG">中英文混合</Select.Option>
+                    <Select.Option value="ENG">英文</Select.Option>
+                    <Select.Option value="POR">葡萄牙语</Select.Option>
+                    <Select.Option value="FRE">法语</Select.Option>
+                    <Select.Option value="GER">德语</Select.Option>
+                    <Select.Option value="ITA">意大利语</Select.Option>
+                    <Select.Option value="SPA">西班牙语</Select.Option>
+                    <Select.Option value="RUS">俄语</Select.Option>
+                    <Select.Option value="JAP">日语</Select.Option>
+                    <Select.Option value="KOR">韩语</Select.Option>
+                  </Select>
+                </Col>
+              </Row>
+
+              <Row>
+                <Button type="primary">文本识别</Button>
+              </Row>
+            </div>
+          )}
         </Col>
 
         <Col>识图结果:</Col>

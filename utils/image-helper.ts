@@ -21,3 +21,19 @@ export async function getFileBase64(file: File | Blob, withMIME = false) {
     };
   });
 }
+
+/**
+ * 判断是否粘贴图片
+ */
+export function isPasteImage(items: DataTransferItemList) {
+  let i = 0;
+  let item;
+  while (i < items.length) {
+    item = items[i];
+    if (item.type.indexOf('image') !== -1) {
+      return item;
+    }
+    i++;
+  }
+  return false;
+}
