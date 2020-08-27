@@ -2,24 +2,36 @@ import mongoose, { Schema } from 'mongoose';
 import '../index';
 
 const googleTranslateSchema = new Schema({
-  token: String,
+  tkk: String,
+  updatedAt: Date,
 });
 
 const GoogleTranslate =
   mongoose.models['google_translate'] ||
   mongoose.model('google_translate', googleTranslateSchema);
 
-export async function getGoogleTranslateToken(): Promise<string | null> {
+export async function getGoogleTranslateTkk(): Promise<{
+  tkk: string | null;
+  updatedAt: Date | null;
+}> {
   const gt = await GoogleTranslate.findOne();
 
-  const token = gt?.get('token') ?? null;
-
-  return token;
+  return {
+    tkk: gt?.get('tkk') ?? null,
+    updatedAt: gt?.get('updatedAt') ?? null,
+  };
 }
 
-export async function setGoogleTranslateToken(token: string) {
-  const gt = new GoogleTranslate({
-    token,
-  });
-  await gt.save();
+export async function setGoogleTranslateTkk(tkk: string) {
+  await GoogleTranslate.findOneAndUpdate(
+    {},
+    {
+      tkk,
+      updatedAt: new Date(),
+    },
+    {
+      upsert: true,
+      useFindAndModify: true,
+    }
+  );
 }

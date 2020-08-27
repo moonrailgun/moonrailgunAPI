@@ -13,7 +13,7 @@
     "antd": "^4.5.4",
     "axios": "^0.20.0",
     "baidu-aip-sdk": "^2.4.6",
-    "google-translate-api": "^2.3.0",
+    "got": "^11.5.2",
     "mongoose": "^5.7.14",
     "next": "latest",
     "react": "^16.12.0",

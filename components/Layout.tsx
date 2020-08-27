@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { Layout, Menu } from 'antd';
-import { AppstoreOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, CodeSandboxOutlined } from '@ant-design/icons';
 
 const renderLink = (link: string, title: string) => {
   return (
@@ -46,7 +46,7 @@ const BaseLayout: React.FC<{
             </Menu.SubMenu>
             <Menu.SubMenu
               key="sandbox"
-              icon={<AppstoreOutlined />}
+              icon={<CodeSandboxOutlined />}
               title="沙盒"
             >
               {renderLink('/sandbox/react', 'React 沙盒')}

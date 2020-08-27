@@ -1,9 +1,10 @@
 import { NextApiHandler } from 'next';
 // import translate from 'google-translate-api';
 import {
-  getGoogleTranslateToken,
-  setGoogleTranslateToken,
+  getGoogleTranslateTkk,
+  setGoogleTranslateTkk,
 } from '../../../utils/db/models/google-translate';
+import { getTKK, translate } from '../../../utils/translate';
 
 const handler: NextApiHandler = async (req, res) => {
   try {
@@ -19,13 +20,23 @@ const handler: NextApiHandler = async (req, res) => {
       return;
     }
 
-    const token = await getGoogleTranslateToken();
-    if (token === null) {
-      await setGoogleTranslateToken(String(new Date().valueOf()));
+    let { tkk, updatedAt } = await getGoogleTranslateTkk();
+    if (
+      tkk === null ||
+      updatedAt === null ||
+      new Date().valueOf() - updatedAt.valueOf() > 1000 * 60 * 10
+    ) {
+      // 如果token为空或上次更新时间低于10分钟
+      tkk = (await getTKK())!;
+      console.log('更新tkk: ', tkk);
+
+      // 获取token
+      await setGoogleTranslateTkk(tkk);
     }
 
-    // const result = await translate(text, { from, to });
-    res.status(200).json({ result: token });
+    const result = await translate(tkk, text, { to });
+
+    res.status(200).json({ result: result });
   } catch (err) {
     console.error(err);
     res.status(500).json(err.message);

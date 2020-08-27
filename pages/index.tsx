@@ -1,14 +1,16 @@
 import Link from 'next/link';
 import Layout from '../components/Layout';
+import { Typography } from 'antd';
 
 const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
+  <Layout title="主页">
+    <Typography.Title level={2}>
+      Hi, 这里是&nbsp;
+      <Link href="http://moonrailgun.com">
+        <a>moonrailgun</a>
       </Link>
-    </p>
+      &nbsp; 的个人工具箱
+    </Typography.Title>
   </Layout>
 );
 
