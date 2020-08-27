@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 
 const renderLink = (link: string, title: string) => {
@@ -33,12 +33,23 @@ const BaseLayout: React.FC<{
           <Menu
             mode="inline"
             selectedKeys={[link]}
-            defaultOpenKeys={['sub1']}
+            defaultOpenKeys={['tools', 'sandbox']}
             style={{ height: '100vh' }}
           >
             {renderLink('/', '主页')}
-            <Menu.SubMenu key="sub1" icon={<AppstoreOutlined />} title="工具箱">
+            <Menu.SubMenu
+              key="tools"
+              icon={<AppstoreOutlined />}
+              title="工具箱"
+            >
               {renderLink('/tools/ocr', '百度识图')}
+            </Menu.SubMenu>
+            <Menu.SubMenu
+              key="sandbox"
+              icon={<AppstoreOutlined />}
+              title="沙盒"
+            >
+              {renderLink('/sandbox/react', 'React 沙盒')}
             </Menu.SubMenu>
           </Menu>
         </Layout.Sider>
