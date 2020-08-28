@@ -43,6 +43,7 @@ const BaseLayout: React.FC<{
               title="工具箱"
             >
               {renderLink('/tools/ocr', '百度识图')}
+              {renderLink('/tools/translate', '谷歌翻译')}
             </Menu.SubMenu>
             <Menu.SubMenu
               key="sandbox"
@@ -70,5 +71,6 @@ const BaseLayout: React.FC<{
     </div>
   );
 });
+BaseLayout.displayName = 'BaseLayout';
 
 export default BaseLayout;
