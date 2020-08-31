@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useDebounce } from 'react-use';
 import Axios from 'axios';
 import styled from 'styled-components';
+import { useTempAudio } from '../../utils/hooks/useTempAudio';
+import { AudioFilled } from '@ant-design/icons';
 
 const TextArea = styled(Input.TextArea).attrs({
   rows: 6,
@@ -11,11 +13,20 @@ const TextArea = styled(Input.TextArea).attrs({
   font-size: 24px;
 `;
 
+const InlineAudioPlay = styled.div`
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+  font-size: 24px;
+  cursor: pointer;
+`;
+
 const TranslatePage: React.FC = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [from, setFrom] = useState('auto');
   const [to, setTo] = useState('en');
+  const { play } = useTempAudio();
 
   useDebounce(
     async () => {
@@ -43,6 +54,20 @@ const TranslatePage: React.FC = () => {
     [input, from, to]
   );
 
+  const tts = (lang: string, text: string) => {
+    if (lang === 'auto' || lang === '') {
+      message.warn('需要指定语言');
+      return;
+    }
+
+    if (text === '') {
+      message.warn('需要指定文本');
+      return;
+    }
+
+    play(`/api/translate/tts?lang=${lang}&text=${text}`);
+  };
+
   return (
     <BaseLayout title="谷歌翻译" link="/tools/translate">
       <Row gutter={8}>
@@ -60,6 +85,10 @@ const TranslatePage: React.FC = () => {
             <Radio.Button value="zh-tw">繁体中文</Radio.Button>
           </Radio.Group>
           <TextArea value={input} onChange={(e) => setInput(e.target.value)} />
+
+          <InlineAudioPlay onClick={() => tts(from, input)}>
+            <AudioFilled />
+          </InlineAudioPlay>
         </Col>
         <Col sm={12}>
           <Radio.Group
@@ -78,6 +107,10 @@ const TranslatePage: React.FC = () => {
             onChange={(e) => setOutput(e.target.value)}
             readOnly={true}
           />
+
+          <InlineAudioPlay onClick={() => tts(to, output)}>
+            <AudioFilled />
+          </InlineAudioPlay>
         </Col>
       </Row>
     </BaseLayout>
