@@ -36,6 +36,7 @@ const OcrPage: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [language, setLanguage] = useState('CHN_ENG');
   const [resultList, setResultList] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   usePaste((e) => {
     if (e.clipboardData && e.clipboardData.items) {
@@ -83,6 +84,7 @@ const OcrPage: React.FC = () => {
       return;
     }
 
+    setLoading(true);
     const base64 = await getFileBase64(fileList[0].originFileObj!);
 
     const { data } = await axios.post('/api/ai/ocr', {
@@ -91,8 +93,9 @@ const OcrPage: React.FC = () => {
     });
 
     const result = data.result.words_result.map((w: any) => w.words);
-
     setResultList(result);
+
+    setLoading(false);
   }, [fileList, language]);
 
   return (
@@ -145,7 +148,7 @@ const OcrPage: React.FC = () => {
               </Row>
 
               <Row>
-                <Button type="primary" onClick={handleSubmit}>
+                <Button type="primary" loading={loading} onClick={handleSubmit}>
                   文本识别
                 </Button>
               </Row>
