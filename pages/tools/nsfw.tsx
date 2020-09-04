@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as nsfwjs from 'nsfwjs';
 import BaseLayout from '../../components/Layout';
