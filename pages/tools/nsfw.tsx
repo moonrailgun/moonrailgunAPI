@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as nsfwjs from 'nsfwjs';
 import BaseLayout from '../../components/Layout';
+import { Row, Col } from 'antd';
 tf.enableProdMode();
 
 interface NSFWPredictions {
@@ -31,22 +32,26 @@ const NSFWPage: React.FC = () => {
 
   return (
     <BaseLayout title="NSFW" link="/tools/nsfw">
-      <div>
-        <img
-          ref={imgRef}
-          src="https://i.imgur.com/Kwxetau.jpg"
-          crossOrigin="anonymous"
-          style={{
-            maxWidth: '100%',
-            maxHeight: 400,
-          }}
-        />
-      </div>
-      {predictions ? (
-        JSON.stringify(predictions, null, 4)
-      ) : (
-        <div>正在处理中...</div>
-      )}
+      <Row>
+        <Col sm={16}>
+          <div>
+            <img
+              ref={imgRef}
+              src="https://i.imgur.com/Kwxetau.jpg"
+              crossOrigin="anonymous"
+              style={{
+                maxWidth: '100%',
+                maxHeight: 400,
+              }}
+            />
+          </div>
+          {predictions ? (
+            JSON.stringify(predictions, null, 4)
+          ) : (
+            <div>正在处理中...</div>
+          )}
+        </Col>
+      </Row>
     </BaseLayout>
   );
 };

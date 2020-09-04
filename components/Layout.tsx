@@ -46,6 +46,7 @@ const BaseLayout: React.FC<{
               {renderLink('/tools/translate', '谷歌翻译')}
               {renderLink('/tools/nsfw', 'NSFW')}
               {renderLink('/tools/dev', 'Dev')}
+              {renderLink('/tools/jwt-decode', 'JWT解包')}
             </Menu.SubMenu>
             <Menu.SubMenu
               key="sandbox"
