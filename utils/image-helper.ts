@@ -2,7 +2,10 @@
  * 根据文件获取其base64编码
  * @param file 文件
  */
-export async function getFileBase64(file: File | Blob, withMIME = false) {
+export async function getFileBase64(
+  file: File | Blob,
+  withMIME = false
+): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
