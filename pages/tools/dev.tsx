@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import BaseLayout from '../../components/Layout';
 
 const packages: { [packageName: string]: any } = {
@@ -8,7 +8,7 @@ const packages: { [packageName: string]: any } = {
 };
 
 Object.entries(packages).forEach(([name, promise]) => {
-  promise.then((module) => {
+  promise.then((module: any) => {
     (window as any)[name] = module;
   });
 });

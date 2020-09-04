@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/config": "0.0.36",
     "@types/google-translate-api": "^2.3.1",
+    "@types/lodash": "^4.14.161",
     "@types/mongoose": "^5.7.36",
     "@types/node": "^12.12.21",
     "@types/react": "^16.9.16",
