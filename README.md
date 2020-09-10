@@ -1,62 +1,24 @@
-# TypeScript Next.js example
+# moonrailgun`s personal api
 
-This is a really simple project that shows the usage of Next.js with TypeScript.
+这是一个私有API的仓库
 
-## Deploy your own
+存放了一些个人用的工具与接口, 欢迎fork
 
-Deploy the example using [Vercel](https://vercel.com):
+基于next.js
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/with-typescript)
+后端依赖于vercel的免费 serverless function 服务部署
 
-## How to use it?
+## 环境变量
 
-### Using `create-next-app`
+- MONGO_URL: mongo连接地址
+- BAIDU_AI_ID: 百度AI appId
+- BAIDU_AI_AK: 百度AI appKey
+- BAIDU_AI_SK: 百度AI secretKey
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+## 自部署
 
-```bash
-npx create-next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
-```
+使用Vercel部署
 
-### Download manually
+直接导入: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/moonrailgun/moonrailgunAPI)
 
-Download the example:
-
-```bash
-curl https://codeload.github.com/vercel/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/with-typescript
-cd with-typescript
-```
-
-Install it and run:
-
-```bash
-npm install
-npm run dev
-# or
-yarn
-yarn dev
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-## Notes
-
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
-
-```
-npm install --save-dev typescript
-```
-
-To enable TypeScript's features, we install the type declarations for React and Node.
-
-```
-npm install --save-dev @types/react @types/react-dom @types/node
-```
-
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
-
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
-
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+创建自己的备份: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/moonrailgun/moonrailgunAPI)
