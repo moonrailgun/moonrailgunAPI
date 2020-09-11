@@ -7,11 +7,13 @@ const packages: { [packageName: string]: any } = {
   slate: import('slate'),
 };
 
-Object.entries(packages).forEach(([name, promise]) => {
-  promise.then((module: any) => {
-    (window as any)[name] = module;
+if (process.browser) {
+  Object.entries(packages).forEach(([name, promise]) => {
+    promise.then((module: any) => {
+      (window as any)[name] = module;
+    });
   });
-});
+}
 
 const DevPage: React.FC = () => {
   return (

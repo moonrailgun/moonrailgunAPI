@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import BaseLayout from '../../components/Layout';
-import { Row, Col, Select, Button } from 'antd';
+import { Row, Col, Select, Button, Divider } from 'antd';
 import { getFileBase64 } from '../../utils/image-helper';
 import { UploadFile } from 'antd/lib/upload/interface';
 import axios from 'axios';
@@ -89,7 +89,7 @@ const OcrPage: React.FC = () => {
           )}
         </Col>
 
-        <Col>
+        <Col sm={12}>
           <div>识图结果:</div>
           <div>
             {resultList.map((item, i) => (
@@ -99,6 +99,7 @@ const OcrPage: React.FC = () => {
 
           {_isString(translate) && (
             <>
+              <Divider />
               <div>自动翻译:</div>
               <div>{translate}</div>
             </>
