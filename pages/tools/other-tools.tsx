@@ -12,6 +12,10 @@ const OtherToolPage: React.FC = () => {
       name: '网站SSL测试',
       url: 'https://www.ssllabs.com/ssltest/index.html',
     },
+    {
+      name: '服务器测试脚本',
+      url: 'https://github.com/ernisn/superspeed',
+    },
   ];
 
   return (
