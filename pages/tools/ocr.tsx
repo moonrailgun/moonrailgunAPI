@@ -5,12 +5,17 @@ import { getFileBase64 } from '../../utils/image-helper';
 import { UploadFile } from 'antd/lib/upload/interface';
 import axios from 'axios';
 import { ImageUploader } from '../../components/ImageUploader';
+import _isString from 'lodash/isString';
+import _isEmpty from 'lodash/isEmpty';
+import { useAsync } from 'react-use';
+import Axios from 'axios';
 
 const OcrPage: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [language, setLanguage] = useState('CHN_ENG');
   const [resultList, setResultList] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [translate, setTranslate] = useState<string | null>(null);
 
   const handleSubmit = useCallback(async () => {
     if (fileList.length !== 1) {
@@ -30,6 +35,21 @@ const OcrPage: React.FC = () => {
 
     setLoading(false);
   }, [fileList, language]);
+
+  useAsync(async () => {
+    setTranslate(null);
+    if (language !== 'CHN_ENG' && resultList) {
+      const { data } = await Axios.get('/api/translate', {
+        params: {
+          from: 'auto',
+          to: 'zh-cn',
+          text: resultList.join('\n'),
+        },
+      });
+
+      setTranslate(data.result?.text);
+    }
+  }, [resultList, language]);
 
   return (
     <BaseLayout title="百度识图" link="/tools/ocr">
@@ -76,6 +96,13 @@ const OcrPage: React.FC = () => {
               <div key={i}>{String(item)}</div>
             ))}
           </div>
+
+          {_isString(translate) && (
+            <>
+              <div>自动翻译:</div>
+              <div>{translate}</div>
+            </>
+          )}
         </Col>
       </Row>
     </BaseLayout>
