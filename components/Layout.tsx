@@ -2,7 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { Layout, Menu } from 'antd';
-import { AppstoreOutlined, CodeSandboxOutlined } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  CodeSandboxOutlined,
+  GithubOutlined,
+} from '@ant-design/icons';
 import { routes, RouteItem } from '../routes';
 
 const renderLink = ([link, title]: RouteItem): React.ReactElement => {
@@ -34,7 +38,7 @@ const BaseLayout: React.FC<{
           <Menu
             mode="inline"
             selectedKeys={[link]}
-            defaultOpenKeys={['tools', 'sandbox']}
+            defaultOpenKeys={Object.keys(routes)}
             style={{ height: '100vh' }}
           >
             {renderLink(['/', '主页'])}
@@ -51,6 +55,9 @@ const BaseLayout: React.FC<{
               title="沙盒"
             >
               {routes['sandbox'].map(renderLink)}
+            </Menu.SubMenu>
+            <Menu.SubMenu key="github" icon={<GithubOutlined />} title="Github">
+              {routes['github'].map(renderLink)}
             </Menu.SubMenu>
           </Menu>
         </Layout.Sider>

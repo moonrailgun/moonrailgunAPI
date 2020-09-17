@@ -6,7 +6,9 @@ const handler: NextApiHandler = async (req, res) => {
 
   try {
     const cache = await getGithubData(String(username), 'starrepo');
-    res.status(200).json({ result: true, repos: cache.data });
+    res
+      .status(200)
+      .json({ result: true, repos: cache.data, updatedAt: cache.updatedAt });
   } catch (err) {
     res.status(500).json(err);
   }

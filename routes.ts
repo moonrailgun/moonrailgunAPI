@@ -18,4 +18,8 @@ export const routes: Routes = {
     // 沙盒
     ['/sandbox/react', 'React 沙盒'],
   ],
+  github: [
+    // Github
+    ['/github/star', '收藏项目'],
+  ],
 };

@@ -21,6 +21,7 @@ prompt({
     await setGithubData(username, 'starrepo', repos);
 
     console.log(`写入数据库完毕, 共 ${repos.length} 条数据`);
+    console.log('可以手动退出脚本了');
   } catch (err) {
     console.error(err);
   }

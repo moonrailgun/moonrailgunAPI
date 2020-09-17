@@ -1,4 +1,6 @@
 import { Octokit } from '@octokit/rest';
+import { pick } from 'lodash';
+import { repoFields } from './fields';
 const octokit = new Octokit();
 
 async function getStarRepoList(username: string, page: number, per_page = 100) {
@@ -38,5 +40,5 @@ export async function getAllStarRepo(username: string) {
 
   console.log('获取完毕');
 
-  return repos;
+  return repos.map((item) => pick(item, repoFields));
 }
