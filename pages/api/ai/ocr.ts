@@ -1,11 +1,11 @@
 import { NextApiHandler } from 'next';
-import { config } from '../../../config';
+import { env } from '../../../config/env';
 
 const AipOcrClient = require('baidu-aip-sdk').ocr;
 
-const APP_ID = config.ai.appId;
-const API_KEY = config.ai.appKey;
-const SECRET_KEY = config.ai.secretKey;
+const APP_ID = env.ai.appId;
+const API_KEY = env.ai.appKey;
+const SECRET_KEY = env.ai.secretKey;
 
 // https://cloud.baidu.com/doc/OCR/s/Ek3h7ycyg
 

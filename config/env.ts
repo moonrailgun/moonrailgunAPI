@@ -1,4 +1,4 @@
-export const config = {
+export const env = {
   mongoUrl: process.env.MONGO_URL,
 
   ai: {

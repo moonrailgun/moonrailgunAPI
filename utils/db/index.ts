@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { config } from '../../config';
+import { env } from '../../config/env';
 
-mongoose.connect(config.mongoUrl!, {
+mongoose.connect(env.mongoUrl!, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,

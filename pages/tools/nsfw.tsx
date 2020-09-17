@@ -6,6 +6,8 @@ import { Row, Col, Progress, message } from 'antd';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { ImageUploader } from '../../components/ImageUploader';
 import { getFileBase64 } from '../../utils/image-helper';
+import { useAsync } from 'react-use';
+import _isNil from 'lodash/isNil';
 tf.enableProdMode();
 
 const modelPath = '/nsfw/quant_nsfw_mobilenet/';
@@ -15,32 +17,36 @@ interface NSFWPredictions {
   probability: number;
 }
 
-let model: nsfwjs.NSFWJS | null = null;
-
 const NSFWPage: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [predictions, setPredictions] = useState<NSFWPredictions[] | null>(
     null
   );
-  const [image, setImage] = useState('https://i.imgur.com/Kwxetau.jpg');
+  const [image, setImage] = useState<string>('');
+  const { value: model } = useAsync(() => {
+    return nsfwjs.load(modelPath);
+  }, []);
 
   useEffect(() => {
     (async () => {
-      // Load the model.
-      if (model === null) {
-        model = await nsfwjs.load(modelPath);
+      if (_isNil(model)) {
+        return;
+      }
+
+      if (image === '') {
+        return;
       }
 
       // Classify the image.
       const img = new Image();
       img.src = image;
       img.onload = () => {
-        model!.classify(img).then((p) => {
+        model.classify(img).then((p) => {
           setPredictions(p);
         });
       };
     })();
-  }, [image]);
+  }, [image, model]);
 
   const handleChange = useCallback(async (list: UploadFile<any>[]) => {
     setFileList(list);
@@ -56,39 +62,51 @@ const NSFWPage: React.FC = () => {
 
   return (
     <BaseLayout title="NSFW" link="/tools/nsfw">
-      <Row>
-        <Col sm={12}>
-          <ImageUploader fileList={fileList} onChange={handleChange} />
-        </Col>
-      </Row>
-      <Row>
-        <Col sm={16}>
-          <div>
-            <img
-              src={image}
-              crossOrigin="anonymous"
-              style={{
-                maxWidth: '100%',
-                maxHeight: 400,
-              }}
-            />
-          </div>
-          {predictions ? (
-            predictions.map((p) => (
-              <div key={p.className}>
-                <span>{p.className}:</span>
-                <span>
-                  <Progress
-                    percent={Number((p.probability * 100).toFixed(2))}
+      {_isNil(model) ? (
+        <div>正在加载AI模型...</div>
+      ) : (
+        <Row gutter={8}>
+          <Col sm={8}>
+            <div>
+              <ImageUploader fileList={fileList} onChange={handleChange} />
+            </div>
+          </Col>
+
+          <Col sm={16}>
+            {image === '' ? (
+              <div>请选择要解析的图片</div>
+            ) : (
+              <div>
+                <div>
+                  <img
+                    src={image}
+                    crossOrigin="anonymous"
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: 400,
+                    }}
                   />
-                </span>
+                </div>
+
+                {predictions ? (
+                  predictions.map((p) => (
+                    <div key={p.className}>
+                      <span>{p.className}:</span>
+                      <span>
+                        <Progress
+                          percent={Number((p.probability * 100).toFixed(2))}
+                        />
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div>正在处理中...</div>
+                )}
               </div>
-            ))
-          ) : (
-            <div>正在处理中...</div>
-          )}
-        </Col>
-      </Row>
+            )}
+          </Col>
+        </Row>
+      )}
     </BaseLayout>
   );
 };
