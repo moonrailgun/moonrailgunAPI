@@ -6,7 +6,7 @@
 
 基于 [next.js](https://nextjs.org/)
 
-后端依赖于vercel的免费 serverless function 服务部署, 无需付出额外的成本。
+后端依赖于 [Vercel](https://vercel.com/) 的免费 `serverless function` 服务部署, 无需付出额外的成本。
 
 ## 环境变量
 
@@ -28,3 +28,21 @@
 ## 使用数据库
 
 使用你自己的的MongoDB或者使用**完全免费**的MongoDB集群: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+
+## 本地开发指令
+
+安装依赖:
+```
+yarn
+```
+
+开发:
+```bash
+yarn dev
+```
+
+构建:
+```bash
+yarn build
+yarn start
+```

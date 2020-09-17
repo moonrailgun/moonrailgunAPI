@@ -3,8 +3,9 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { Layout, Menu } from 'antd';
 import { AppstoreOutlined, CodeSandboxOutlined } from '@ant-design/icons';
+import { routes, RouteItem } from '../routes';
 
-const renderLink = (link: string, title: string) => {
+const renderLink = ([link, title]: RouteItem): React.ReactElement => {
   return (
     <Menu.Item key={link}>
       <Link href={link}>
@@ -36,25 +37,20 @@ const BaseLayout: React.FC<{
             defaultOpenKeys={['tools', 'sandbox']}
             style={{ height: '100vh' }}
           >
-            {renderLink('/', '主页')}
+            {renderLink(['/', '主页'])}
             <Menu.SubMenu
               key="tools"
               icon={<AppstoreOutlined />}
               title="工具箱"
             >
-              {renderLink('/tools/ocr', '百度识图')}
-              {renderLink('/tools/translate', '谷歌翻译')}
-              {renderLink('/tools/nsfw', 'NSFW')}
-              {renderLink('/tools/dev', 'Dev')}
-              {renderLink('/tools/jwt-decode', 'JWT解包')}
-              {renderLink('/tools/other-tools', '其他实用工具')}
+              {routes['tools'].map(renderLink)}
             </Menu.SubMenu>
             <Menu.SubMenu
               key="sandbox"
               icon={<CodeSandboxOutlined />}
               title="沙盒"
             >
-              {renderLink('/sandbox/react', 'React 沙盒')}
+              {routes['sandbox'].map(renderLink)}
             </Menu.SubMenu>
           </Menu>
         </Layout.Sider>
