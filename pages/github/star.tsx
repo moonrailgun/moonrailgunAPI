@@ -3,7 +3,7 @@ import Axios from 'axios';
 import React, { useMemo, useState } from 'react';
 import { useAsync } from 'react-use';
 import BaseLayout from '../../components/Layout';
-import { isNil } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import Fuse from 'fuse.js';
 
 interface GithubRepoItem {
@@ -76,9 +76,11 @@ const GithubStarPage: React.FC = () => {
   }, []);
 
   return (
-    <BaseLayout title="DEV" link="/github/star">
-      {isNil(allStarItem) ? (
+    <BaseLayout title="Github Star" link="/github/star">
+      {isUndefined(allStarItem) ? (
         <div>正在获取所有的收藏...</div>
+      ) : isNull(allStarItem) ? (
+        <div>无数据</div>
       ) : (
         <GithubStarList allStarItem={allStarItem} />
       )}
