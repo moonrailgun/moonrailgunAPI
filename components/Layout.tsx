@@ -71,7 +71,7 @@ const BaseLayout: React.FC<{
         >
           <div style={{ flex: 1 }}>{children}</div>
           <Layout.Footer style={{ textAlign: 'center' }}>
-            Power by <a href="http://moonrailgun.com">moonrailgun</a> with ❤
+            Powered by <a href="http://moonrailgun.com">moonrailgun</a> with ❤
           </Layout.Footer>
         </Layout.Content>
       </Layout>
