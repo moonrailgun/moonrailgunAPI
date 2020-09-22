@@ -8,6 +8,13 @@ import {
   GithubOutlined,
 } from '@ant-design/icons';
 import { routes, RouteItem } from '../routes';
+import styled from 'styled-components';
+
+const ContentMain = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
 
 const renderLink = ([link, title]: RouteItem): React.ReactElement => {
   return (
@@ -67,9 +74,11 @@ const BaseLayout: React.FC<{
             minHeight: 280,
             display: 'flex',
             flexDirection: 'column',
+            maxHeight: '100vh',
+            overflow: 'auto',
           }}
         >
-          <div style={{ flex: 1 }}>{children}</div>
+          <ContentMain>{children}</ContentMain>
           <Layout.Footer style={{ textAlign: 'center' }}>
             Powered by <a href="http://moonrailgun.com">moonrailgun</a> with ❤
           </Layout.Footer>
