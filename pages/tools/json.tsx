@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import BaseLayout from '../../components/Layout';
 import { Button, Col, Input, Row, Space, Tooltip } from 'antd';
 import dynamic from 'next/dynamic';
-import { SnippetsOutlined } from '@ant-design/icons';
+import { SnippetsOutlined, MergeCellsOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
@@ -51,6 +51,12 @@ const JSONPage: React.FC = () => {
     } catch (e) {}
   }, [text]);
 
+  const handleCompact = useCallback(() => {
+    try {
+      setText(JSON.stringify(JSON.parse(text ?? '')));
+    } catch (e) {}
+  }, [text]);
+
   return (
     <BaseLayout title="JSON解析" link="/tools/json">
       <Container>
@@ -58,6 +64,9 @@ const JSONPage: React.FC = () => {
           <Space>
             <Tooltip title="格式化">
               <Button icon={<SnippetsOutlined />} onClick={handleFormat} />
+            </Tooltip>
+            <Tooltip title="压缩">
+              <Button icon={<MergeCellsOutlined />} onClick={handleCompact} />
             </Tooltip>
           </Space>
         </Row>
