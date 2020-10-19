@@ -23,4 +23,5 @@ export const routes: Routes = {
     // Github
     ['/github/star', '收藏项目'],
   ],
+  query: [['/query/ascii', 'ASCII 对照表']],
 };

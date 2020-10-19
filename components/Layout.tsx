@@ -5,6 +5,7 @@ import { Layout, Menu } from 'antd';
 import {
   AppstoreOutlined,
   CodeSandboxOutlined,
+  FileSearchOutlined,
   GithubOutlined,
   HomeOutlined,
 } from '@ant-design/icons';
@@ -71,6 +72,9 @@ const BaseLayout: React.FC<{
           </Menu.SubMenu>
           <Menu.SubMenu key="github" icon={<GithubOutlined />} title="Github">
             {routes['github'].map(renderLink)}
+          </Menu.SubMenu>
+          <Menu.SubMenu key="query" icon={<FileSearchOutlined />} title="查询">
+            {routes['query'].map(renderLink)}
           </Menu.SubMenu>
         </Menu>
       </Layout.Sider>
