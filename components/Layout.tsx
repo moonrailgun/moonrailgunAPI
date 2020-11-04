@@ -187,7 +187,7 @@ const BaseLayout: React.FC<{
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <Layout>
+      <Layout style={{ height: '100%' }}>
         {renderSidebar()}
         {renderContent()}
       </Layout>
