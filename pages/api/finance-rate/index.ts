@@ -3,7 +3,6 @@ import {
   fetchFinanceRate,
   getFinanceRate,
 } from '../../../utils/db/models/finance-rate';
-import { getTKK, translate } from '../../../utils/translate';
 
 const handler: NextApiHandler = async (req, res) => {
   try {

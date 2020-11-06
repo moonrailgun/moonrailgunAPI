@@ -16,6 +16,14 @@ const OtherToolPage: React.FC = () => {
       name: '服务器测试脚本',
       url: 'https://github.com/ernisn/superspeed',
     },
+    {
+      name: '在线GIF编辑',
+      url: 'http://www.gifntext.com/',
+    },
+    {
+      name: '代码片段生成',
+      url: 'https://carbon.now.sh/',
+    },
   ];
 
   return (
