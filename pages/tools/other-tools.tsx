@@ -24,6 +24,10 @@ const OtherToolPage: React.FC = () => {
       name: '代码片段生成',
       url: 'https://carbon.now.sh/',
     },
+    {
+      name: 'Mermaid Live Editor',
+      url: 'https://mermaid-js.github.io/mermaid-live-editor/',
+    },
   ];
 
   return (
