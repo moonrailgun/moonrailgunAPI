@@ -28,6 +28,10 @@ const OtherToolPage: React.FC = () => {
       name: 'Mermaid Live Editor',
       url: 'https://mermaid-js.github.io/mermaid-live-editor/',
     },
+    {
+      name: '排序算法',
+      url: 'https://www.toptal.com/developers/sorting-algorithms',
+    },
   ];
 
   return (
