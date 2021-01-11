@@ -316,7 +316,7 @@ export function jsonToGo(json: string, typename: any, flatten = true) {
 
     return str
       .replace(/(^|[^a-zA-Z])([a-z]+)/g, function (
-        unused: any,
+        _: any,
         sep: any,
         frag: any
       ) {
@@ -324,7 +324,7 @@ export function jsonToGo(json: string, typename: any, flatten = true) {
           return sep + frag.toUpperCase();
         else return sep + frag[0].toUpperCase() + frag.substr(1).toLowerCase();
       })
-      .replace(/([A-Z])([a-z]+)/g, function (unused: any, sep: any, frag: any) {
+      .replace(/([A-Z])([a-z]+)/g, function (_: any, sep: any, frag: any) {
         if (commonInitialisms.indexOf(sep + frag.toUpperCase()) >= 0)
           return (sep + frag).toUpperCase();
         else return sep + frag;
