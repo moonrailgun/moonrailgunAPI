@@ -27,7 +27,7 @@ const JWTDecodePage: React.FC = () => {
       <Row>
         <Col sm={16}>
           <TextArea rows={6} value={value} onChange={handleChange} />
-          <pre>{JSON.stringify(result)}</pre>
+          <pre>{JSON.stringify(result, null, 4)}</pre>
         </Col>
       </Row>
     </BaseLayout>
