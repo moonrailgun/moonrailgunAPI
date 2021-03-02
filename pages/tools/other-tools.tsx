@@ -32,6 +32,10 @@ const OtherToolPage: React.FC = () => {
       name: '排序算法',
       url: 'https://www.toptal.com/developers/sorting-algorithms',
     },
+    {
+      name: 'waifulabs',
+      url: 'https://waifulabs.com/',
+    },
   ];
 
   return (
