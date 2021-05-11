@@ -21,7 +21,7 @@
     "got": "^11.5.2",
     "inquirer": "^7.3.3",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.27.0",
     "mongoose": "^5.7.14",
     "next": "latest",
